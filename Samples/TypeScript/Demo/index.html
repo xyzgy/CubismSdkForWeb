@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <meta content="width=1900" name="viewport">
+                <title>
+                    TypeScript HTML App
+                </title>
+                <style>
+                    html, body {
+        margin: 0;
+        overflow: hidden;
+
+    }
+    canvas{
+      position: fixed;
+      bottom: 10px;
+    }
+                </style>
+                <!-- Pollyfill script -->
+                <script src="https://unpkg.com/core-js-bundle@3.6.1/minified.js">
+                </script>
+                <!-- Live2DCubismCore script -->
+                <script src="../../../Core/live2dcubismcore.js">
+                </script>
+                <!-- Build script -->
+                <script src="./dist/bundle.js">
+                </script>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <canvas @mousedown="mousedown" @mouseup="mouseup" @touchend="mouseup" @touchstart.passive="mousedown" height="400" id="live2d" width="300">
+        </canvas>
+    </body>
+    <script>
+        const {Live2d: { LAppDefine, LAppDelegate, LAppLive2DManager },
+      } = window;
+      const canvasId='live2d', canvasInfo={width:400,height:300};
+      
+      const LAppDelegateGetInstance = LAppDelegate.getInstance(),
+        LAppView = LAppDelegateGetInstance._view,
+        LAppTouchManager = LAppDelegateGetInstance._view._touchManager;
+      LAppDefine.CanvasId = canvasId;
+      LAppDefine.CanvasSize = {
+        width: canvasInfo.width,
+        height: canvasInfo.height,
+      }; //画布大小 默认值auto,resize会铺满全屏
+      // LAppDefine.ResourcesPath = resourcesPath; //模型路径
+      // LAppDefine.BackImageName = backImageName; //背景图片
+      LAppDefine.GearImageName = ''; //右上角齿轮
+      LAppDefine.DebugLogEnable = true; //debug
+      console.log(window);
+
+      // if (LAppDelegateGetInstance.initialize(canvasId) == false) {
+      //   return;
+      // }
+      LAppDelegateGetInstance.initialize(canvasId)
+      LAppDelegateGetInstance.run(true); //canvas背景透明
+    </script>
+</html>
